@@ -457,18 +457,17 @@ void AngularGauge::drawScaleRanges(QPainter *painter)
     painter->save();
 
     qreal scaleRangeWidth = m_proportionScaleRange * m_paintArea.width();
-    qreal scaleRangesRadius = 2 * computeFaceRadius() - scaleRangeWidth;
-    QRectF scaleRangesArea(m_paintArea.x() + m_paintArea.width() / 2 - computeFaceRadius() + scaleRangeWidth / 2,
-                           m_paintArea.y() + m_paintArea.height() / 2 - computeFaceRadius() + scaleRangeWidth / 2,
+    qreal scaleRangesRadius = 2 * computeFaceRadius() + 2 * computeFrameWidth() - scaleRangeWidth;
+    QRectF scaleRangesArea(m_paintArea.x() + m_paintArea.width() / 2 - computeFaceRadius() - computeFrameWidth() + scaleRangeWidth / 2,
+                           m_paintArea.y() + m_paintArea.height() / 2 - computeFaceRadius() - computeFrameWidth() + scaleRangeWidth / 2,
                            scaleRangesRadius,
                            scaleRangesRadius);
-
 
     for(int i = 0; i < m_scaleRanges.size(); ++i)
     {
         qreal beginDegree = valueToDegree(m_scaleRanges.at(i).beginValue);
         qreal endDegree = valueToDegree(m_scaleRanges.at(i).endValue) - beginDegree;
-        painter->setPen(QPen(QBrush(m_scaleRanges.at(i).color), scaleRangeWidth, Qt::SolidLine, Qt::FlatCap));
+        painter->setPen(QPen(QBrush(m_scaleRanges.at(i).color), scaleRangeWidth / 2, Qt::SolidLine, Qt::FlatCap));
         painter->drawArc(scaleRangesArea,
                          beginDegree * 16,
                          endDegree * 16);
