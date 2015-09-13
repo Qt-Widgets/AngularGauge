@@ -253,6 +253,7 @@ qreal AngularGauge::getBeginningFrameDegree() const
 void AngularGauge::setBeginningFrameDegree(const qreal &beginningFrameDegree)
 {
     m_beginningFrameDegree = beginningFrameDegree;
+    generateFrame();
     update();
 }
 
@@ -264,6 +265,8 @@ qreal AngularGauge::getEndingFrameDegree() const
 void AngularGauge::setEndingFrameDegree(const qreal &endingFrameDegree)
 {
     m_endingFrameDegree = endingFrameDegree;
+    generateFrame();
+    update();
 }
 
 QColor AngularGauge::getMarkerColor() const
