@@ -162,7 +162,7 @@ counterclockwise     | Против часовой
 
 ![ScreenShot](http://imageshack.com/a/img911/6905/TzhmIH.png) | ![ScreenShot](http://imagizer.imageshack.us/a/img673/2526/UbDBUG.png)
 --------  | ---
-По часовой| Против часовой
+DirectionArrow::clockwise | DirectionArrow::counterclockwise
 
 ===================
 
