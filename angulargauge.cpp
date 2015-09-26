@@ -35,8 +35,8 @@ AngularGauge::AngularGauge(QWidget *parent)
     setAttribute(Qt::WA_AlwaysShowToolTips);
     setToolTip(QString::number(m_value));
     computePaintArea();
-    generateFrame();
-    generateMarker();
+    updateFrame();
+    updateMarker();
     setMinimumSize(90, 90);
 }
 
@@ -106,7 +106,7 @@ qreal AngularGauge::getBeginningScaleDegree() const
 void AngularGauge::setBeginningScaleDegree(const qreal &beginningScaleDegree)
 {
     m_beginningScaleDegree = beginningScaleDegree;
-    generateFrame();
+    updateFrame();
     update();
 }
 
@@ -118,7 +118,7 @@ qreal AngularGauge::getEndingScaleDegree() const
 void AngularGauge::setEndingScaleDegree(const qreal &endingScaleDegree)
 {
     m_endingScaleDegree = endingScaleDegree;
-    generateFrame();
+    updateFrame();
     update();
 }
 
@@ -169,8 +169,8 @@ AngularGauge::GaugeStyle AngularGauge::getGaugeStyle() const
 void AngularGauge::setGaugeStyle(const GaugeStyle &gaugeStyle)
 {
     m_gaugeStyle = gaugeStyle;
-    generateFrame();
-    generateMarker();
+    updateFrame();
+    updateMarker();
     update();
 }
 
@@ -196,8 +196,8 @@ void AngularGauge::setMargins(const QMarginsF &margins)
     m_margins = margins;
     setMinimumSize(90 + m_margins.left() + m_margins.right(),
                    90 + m_margins.bottom() + m_margins.top());
-    generateFrame();
-    generateMarker();
+    updateFrame();
+    updateMarker();
     update();
 }
 
@@ -253,7 +253,7 @@ qreal AngularGauge::getBeginningFrameDegree() const
 void AngularGauge::setBeginningFrameDegree(const qreal &beginningFrameDegree)
 {
     m_beginningFrameDegree = beginningFrameDegree;
-    generateFrame();
+    updateFrame();
     update();
 }
 
@@ -265,7 +265,7 @@ qreal AngularGauge::getEndingFrameDegree() const
 void AngularGauge::setEndingFrameDegree(const qreal &endingFrameDegree)
 {
     m_endingFrameDegree = endingFrameDegree;
-    generateFrame();
+    updateFrame();
     update();
 }
 
@@ -383,8 +383,8 @@ void AngularGauge::paintEvent(QPaintEvent *)
 void AngularGauge::resizeEvent(QResizeEvent *)
 {
     computePaintArea();
-    generateFrame();
-    generateMarker();
+    updateFrame();
+    updateMarker();
 }
 
 QSize AngularGauge::sizeHint() const
@@ -530,7 +530,6 @@ void AngularGauge::drawNumebrs(QPainter *painter)
     qreal stepDegreeValue = (m_maximumValue - m_minimumValue) / m_numberBigScaleDivisions;
     int heightString = fontMetrics.height();
 
-    //NOTE исправить функцию
     if(m_directionArrow == counterclockwise)
     for(int i = 0; i <= m_numberBigScaleDivisions; i++)
     {
@@ -540,7 +539,7 @@ void AngularGauge::drawNumebrs(QPainter *painter)
                                   -rangeText * qSin(curentRadianAngle)),
                                   QString::number(m_minimumValue + stepDegreeValue * i));
     }
-    else
+    else // (m_directionArrow == clockwise)
     for(int i = 0; i <= m_numberBigScaleDivisions; i++)
     {
         qreal curentRadianAngle = qDegreesToRadians(m_beginningScaleDegree + i * stepDegreeAngle);
@@ -615,7 +614,7 @@ void AngularGauge::computePaintArea()
                          sizeSquare);
 }
 
-void AngularGauge::generateFrame()
+void AngularGauge::updateFrame()
 {
     switch (m_gaugeStyle) {
     case standart:
@@ -693,7 +692,7 @@ void AngularGauge::generateFrame()
     }
 }
 
-void AngularGauge::generateMarker()
+void AngularGauge::updateMarker()
 {
     QPainterPath marker;
     qreal sizeCellMarker = m_proportionMarker * m_paintArea.height() / 144;

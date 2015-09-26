@@ -155,8 +155,8 @@ private:
     //вычислить область в которой будет изображаться индикатор
     void computePaintArea();
 
-    void generateFrame();
-    void generateMarker();
+    void updateFrame();
+    void updateMarker();
 
     int computeFaceRadius();
     int computeFrameWidth();
